@@ -3,7 +3,8 @@
 namespace App\Botflow;
 
 use App\Botflow\Console\BotCommand;
-use App\Botflow\Console\BotSetup;
+use App\Botflow\Console\BotStart;
+use App\Botflow\Console\BotStop;
 use App\Botflow\Contracts\IBotService;
 use App\Botflow\Events\TelegramActionTime;
 use App\Botflow\Events\TelegramCommandReceived;
@@ -60,7 +61,8 @@ class BotflowServiceProvider extends EventServiceProvider
 
         $this->commands([
             BotCommand::class,
-            BotSetup::class,
+            BotStart::class,
+            BotStop::class,
         ]);
     }
 

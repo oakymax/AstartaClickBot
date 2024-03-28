@@ -3,6 +3,7 @@
 namespace App\Botflow\Telegraph;
 
 use DefStudio\Telegraph\Client\TelegraphResponse;
+use DefStudio\Telegraph\Exceptions\TelegramWebhookException;
 use DefStudio\Telegraph\Telegraph;
 use Illuminate\Support\Facades\Log;
 use Psr\Log\LoggerInterface;
@@ -112,7 +113,35 @@ class BotflowTelegraph extends Telegraph
         return $response;
     }
 
+    protected function getWebhookUrl(): string
+    {
+        $customWebhookUrl = config('telegraph.webhook.domain', config('telegraph.custom_webhook_domain'));
 
+        if ($customWebhookUrl === null) {
+            $url = route('telegraph.webhook', $this->getBot());
+
+            if (!str_starts_with($url, 'https://')) {
+                throw TelegramWebhookException::invalidScheme();
+            }
+
+            return $url;
+        }
+
+        return $customWebhookUrl . route('telegraph.webhook', $this->getBot(), false);
+    }
+
+    public function registerWebhook(bool $dropPendingUpdates = false): Telegraph
+    {
+        $telegraph = clone $this;
+
+        $telegraph->endpoint = self::ENDPOINT_SET_WEBHOOK;
+        $telegraph->data = [
+            'url' => $this->getWebhookUrl(),
+            'drop_pending_updates' => $dropPendingUpdates,
+        ];
+
+        return $telegraph;
+    }
 
     public function setMessageReaction(int $messageId, string $reaction = self::REACTION_HEART): self
     {
