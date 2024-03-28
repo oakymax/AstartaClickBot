@@ -12,8 +12,9 @@ class Calculator extends CommonBotFlow
     {
         if (preg_match('/^((\d*\.?\d*)([+-\/*]))*(\d*\.?\d*)$/', $message->text())) {
             try {
+                $formula = str_replace(',', '.', $message->text());
                 $x = 0;
-                eval("\$x={$message->text()};");
+                eval("\$x={$formula};");
                 $this->botService->telegraph()->markdown($x)->send();
                 $this->botService->bot()->storage()->set("message.{$message->id()}.processed", true);
             } catch (\Exception $e) {
