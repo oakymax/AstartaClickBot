@@ -2,7 +2,6 @@
 
 namespace App\Botflow\Telegraph\DTO;
 
-use App\Telegram\Contracts\FlowBed;
 use DefStudio\Telegraph\DTO\CallbackQuery;
 use DefStudio\Telegraph\DTO\InlineQuery;
 use DefStudio\Telegraph\DTO\Message;
@@ -37,7 +36,7 @@ class Update implements Arrayable
         }
 
         if (isset($data['edited_message'])) {
-            $udpate->editedMessage = Message::fromArray($data['message']);
+            $udpate->editedMessage = Message::fromArray($data['edited_message']);
         }
 
         if (isset($data['channel_post'])) {

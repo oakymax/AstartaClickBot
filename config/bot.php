@@ -1,12 +1,17 @@
 <?php
 
+use App\Models\Bot\Commands\Hello;
+use App\Models\Bot\Commands\Help;
+use App\Models\Bot\Commands\Start;
+use App\Models\Bot\Flows\Calculator;
+
 return [
     'token' => env('BOT_TOKEN'),
 
     'name' => env('BOT_NAME'),
 
     'menu' => [
-        'help' => 'Справка',
+        'help' => 'Что умеет Захар',
     ],
 
     'middleware' => [
@@ -14,11 +19,13 @@ return [
     ],
 
     'commands' => [
-        \App\Models\Bot\Commands\Hello::class,
+        Hello::class,
+        Help::class,
+        Start::class,
     ],
 
     'flows' => [
-
+        Calculator::class,
     ],
 
     'unknownCommandAction' => null,

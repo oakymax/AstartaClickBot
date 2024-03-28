@@ -1,7 +1,7 @@
 {
-    "name": "oakymax/boopbot",
+    "name": "oakymax/astarta-click-bot",
     "type": "project",
-    "description": "Boob Bot source code.",
+    "description": "Astarta Click Bot source code.",
     "keywords": ["laravel", "bot", "telegram"],
     "license": "MIT",
     "require": {
