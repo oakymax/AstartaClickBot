@@ -1,4 +1,4 @@
-## Подготовка системы
+# Подготовка системы
 
 _Инструкции актуальны для Ubuntu 22.4_
 
@@ -11,20 +11,20 @@ _Инструкции актуальны для Ubuntu 22.4_
 * для удобства работы с sail [добавить алиас](https://laravel.com/docs/11.x/sail#configuring-a-shell-alias)
   * `alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'`
 
-## Настройка и запуск 
+# Настройка и запуск 
 
-### 1. Клонирование репозитория
+## 1. Клонирование репозитория
 
-```bash
+```shell
 git clone git@github.com:oakymax/AstartaClickBot.git
 cd AstartaClickBot
 ```
 
-### 2. Публикация конфигов
+## 2. Публикация конфигов
 
 Для среды dev:
 
-```bash
+```shell
 cp docker-compose.dev.yml docker-compose.yml
 cp docker/dev.Dockerfile docker/Dockerfile
 cp .env.example .env
@@ -33,14 +33,14 @@ cp .docker.env.example .docker.env
 
 Для среды prod:
 
-```bash
+```shell
 cp docker-compose.prod.yml docker-compose.yml
 cp docker/prod.Dockerfile docker/Dockerfile
 cp .env.example .env
 cp .docker.env.example .docker.env  
 ```
 
-### Настройка конфигов
+## 3. Настройка конфигов
 
 На что обратить внимание:
 * .env
@@ -63,9 +63,11 @@ cp .docker.env.example .docker.env
   * для среды dev должен быть свободен также внешний порт контейнера db 
     (по-умолчанию `65432`)
 
+## 4. Запуск и остановка приложения
+
 ### Запуск приложения
 
-```bash
+```shell
 sail up -d
 sail composer install
 sail artisan migrate
@@ -73,9 +75,27 @@ sail artisan key:generate
 ```
 
 В резултате этих действий живое приложение должно торчать 
-через внешний порт контейнера (по-умолчанию `8531`) 
+через внешний порт контейнера (по-умолчанию `8531`)
 
-### Запуск и остановка бота
+### Остановка приложения
+
+Для остановки приложения:
+```shell
+sail down
+```
+
+### Пересборка контейнеров
+
+Для [пересборки контейнеров](https://laravel.com/docs/11.x/sail#rebuilding-sail-images) 
+(сбросить виртуальные машины, в т.ч. БД):
+
+```shell
+docker compose down -v
+sail build --no-cache
+sail up
+```
+
+## 5. Запуск и остановка бота
 
 Бот получает сообщения от сервера телеграм через свой метод (хук) 
 `{APP_URL}/bot/{BOT_TOKEN}/webhook`, который должен быть доступен во 
@@ -84,22 +104,22 @@ sail artisan key:generate
 Параметры `APP_URL` и `BOT_TOKEN` задаются в файле `.env`. Также для запуска 
 бота необходимо заполнить `BOT_NAME`.
 
-#### Запуск бота 
+### Запуск бота 
 
 Регистрация хука. Телеграм начинает отправлять сообщения серверу бота
 
-```bash
+```shell
 sail artisan bot:start --get-updates
 ```
 
 При добавлении флага `--get-updates` телеграм передаст все необработанные 
 события бота за последние 24 часа 
 
-#### Остановка бота
+### Остановка бота
 
 Снятие хука. Телеграм продолжает обрабатывать и хранить события бота 24 часа
 
-```bash
+```shell
 sail artisan bot:stop
 ```
 
@@ -107,13 +127,13 @@ _ВНИМАНИЕ: Останавливать бот желательно все
 контейнера, а также если бот выдаёт ошибки `500`, т.к. сервер телеграм банит 
 хуки, которые отвечают некорректно._
 
-#### Локальный сервер для разработки
+### Локальный сервер для разработки
 
 Для разработки удобно использовать сервис проброса локального 
 порта во внешний интернет [TUNA](https://tuna.am/) (бесплатный, но требует 
 регистрации):
 
-```bash
+```shell
 $ tuna http 8531
 INFO[22:33:08] Welcome to Tuna                              
 INFO[22:33:09] Account: MK (Free)                           

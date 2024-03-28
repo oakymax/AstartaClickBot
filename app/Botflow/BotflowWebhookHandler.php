@@ -44,7 +44,6 @@ class BotflowWebhookHandler extends WebhookHandler
 
     public function handle(Request $request, TelegraphBot $bot): void
     {
-
         $this->log->info("[BOT <= TG][HOOK] ", $request->all());
 
         $this->bot = $bot;

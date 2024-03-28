@@ -2,11 +2,20 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int $id
+ *
+ * @property int $name
+ * @property string $email
+ * @property string $password
+ * @property int $telegram_id
+ * @property UserRole $role
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -20,6 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'telegram_id',
     ];
 
     /**
@@ -42,6 +53,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
         ];
     }
 }
