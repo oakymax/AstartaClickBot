@@ -15,6 +15,7 @@ class Calculator extends CommonBotFlow
                 $x = 0;
                 eval("\$x={$message->text()};");
                 $this->botService->telegraph()->markdown($x)->send();
+                $this->botService->bot()->storage()->set("message.{$message->id()}.processed", true);
             } catch (\Exception $e) {
                 $this->botService->log()->error("Не удалось посчитать '{$message->text()}': " . $e->getMessage());
             }

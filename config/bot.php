@@ -4,6 +4,7 @@ use App\Models\Bot\Commands\Hello;
 use App\Models\Bot\Commands\Help;
 use App\Models\Bot\Commands\Start;
 use App\Models\Bot\Flows\Calculator;
+use App\Models\Bot\Flows\UnprocessedMessageResponse;
 
 return [
     'token' => env('BOT_TOKEN'),
@@ -26,6 +27,7 @@ return [
 
     'flows' => [
         Calculator::class,
+        UnprocessedMessageResponse::class,
     ],
 
     'unknownCommandAction' => null,
