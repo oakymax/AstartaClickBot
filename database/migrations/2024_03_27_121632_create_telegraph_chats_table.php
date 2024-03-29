@@ -18,4 +18,12 @@ return new class () extends Migration {
             $table->unique(['chat_id', 'telegraph_bot_id']);
         });
     }
+
+    /**
+     * @todo: отправить PR в defstudio/telegraph на откат миграций из коробки
+     */
+    public function down()
+    {
+        Schema::dropIfExists('telegraph_chats');
+    }
 };

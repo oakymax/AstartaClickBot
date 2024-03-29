@@ -15,6 +15,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('name');
+            $table->boolean('gender')->nullable();
+            $table->date('birthday')->nullable();
 
             $table->string('role')->default(UserRole::Unknown->value);
             $table->bigInteger('telegram_id')->unique();

@@ -4,6 +4,8 @@ namespace App\Enums;
 
 enum UserRole: string
 {
+    use EnumToArray;
+
     /** создатель */
     case Root = "root";
 

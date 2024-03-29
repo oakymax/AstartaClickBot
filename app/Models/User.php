@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +12,8 @@ use Illuminate\Notifications\Notifiable;
  * @property int $id
  *
  * @property int $name
+ * @property bool|null $gender
+ * @property Carbon $birthday
  * @property string $email
  * @property string $password
  * @property int $telegram_id
@@ -31,6 +34,7 @@ class User extends Authenticatable
         'password',
         'role',
         'telegram_id',
+        'birthday',
     ];
 
     /**
@@ -54,6 +58,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => UserRole::class,
+            'birthday' => 'date:Y-m-d',
         ];
     }
 }
