@@ -2,6 +2,7 @@
 
 namespace App\Botflow\Events;
 
+use App\Botflow\Telegraph\DTO\Update;
 use DefStudio\Telegraph\DTO\Message;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;

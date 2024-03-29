@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.2-fpm
 
 RUN apt-get update -qq && apt-get upgrade -y
 
@@ -66,11 +66,9 @@ RUN docker-php-ext-install \
   zip \
   exif \
   && pecl install imagick \
-  && docker-php-ext-enable imagick #\
-#  && pecl install xdebug \
-#  && docker-php-ext-enable xdebug
-#  && pecl install redis \
-#  && docker-php-ext-enable redis
+  && docker-php-ext-enable imagick \
+  && pecl install redis \
+  && docker-php-ext-enable redis
 
 RUN docker-php-source delete \
     apt-get autoremove --purge -y && apt-get autoclean -y && apt-get clean -y

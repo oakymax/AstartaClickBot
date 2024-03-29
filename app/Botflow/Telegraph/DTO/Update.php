@@ -2,6 +2,7 @@
 
 namespace App\Botflow\Telegraph\DTO;
 
+use App\Botflow\Contracts\FlowBed;
 use DefStudio\Telegraph\DTO\CallbackQuery;
 use DefStudio\Telegraph\DTO\InlineQuery;
 use DefStudio\Telegraph\DTO\Message;

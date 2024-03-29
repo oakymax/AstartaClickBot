@@ -17,7 +17,7 @@ class TelegramMiddlewareTime
      *
      * @return void
      */
-    public function __construct(public Update $update)
+    public function __construct()
     {
         //
     }

@@ -5,6 +5,7 @@ use App\Models\Bot\Commands\Help;
 use App\Models\Bot\Commands\Start;
 use App\Models\Bot\Flows\Calculator;
 use App\Models\Bot\Flows\UnprocessedMessageResponse;
+use App\Models\Bot\Middleware\AuthenticateUser;
 
 return [
     'token' => env('BOT_TOKEN'),
@@ -16,7 +17,7 @@ return [
     ],
 
     'middleware' => [
-
+        AuthenticateUser::class,
     ],
 
     'commands' => [

@@ -10,16 +10,17 @@ use App\Botflow\Events\TelegramActionTime;
 use App\Botflow\Events\TelegramCommandReceived;
 use App\Botflow\Events\TelegramMessageReceived;
 use App\Botflow\Events\TelegramMiddlewareTime;
-use App\Botflow\Events\TelegramUpdateReceived;
 use App\Botflow\Listeners\TelegramActionTimeListener;
 use App\Botflow\Listeners\TelegramCommandListener;
 use App\Botflow\Listeners\TelegramMessageListener;
 use App\Botflow\Listeners\TelegramMiddlewareTimeListener;
-use App\Botflow\Listeners\TelegramUpdateListener;
 use App\Botflow\Telegraph\BotflowTelegraph;
+use App\Botflow\Telegraph\DTO\Update;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
+use Illuminate\Http\Request;
 
 class BotflowServiceProvider extends EventServiceProvider
 {
@@ -40,14 +41,16 @@ class BotflowServiceProvider extends EventServiceProvider
         TelegramMiddlewareTime::class => [
             TelegramMiddlewareTimeListener::class,
         ],
-        TelegramUpdateReceived::class => [
-            TelegramUpdateListener::class,
-        ],
     ];
 
     public function boot()
     {
         $this->app->bind('telegraph', fn () => new BotflowTelegraph());
+
+        $this->app->bind(Update::class, function (Application $app) {
+            $request = $app->make(Request::class);
+            return Update::fromArray($request->all());
+        });
 
         $this->app->singleton(IBotService::class, fn () =>
              new BotService(

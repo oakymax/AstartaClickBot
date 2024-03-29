@@ -118,9 +118,9 @@ class BotService implements IBotService
         return $this->chat;
     }
 
-    public function flows(): Collection
+    public function nextFlow(): ?IBotFlow
     {
-        return collect($this->flows);
+        return array_shift($this->flows);
     }
 
     /**

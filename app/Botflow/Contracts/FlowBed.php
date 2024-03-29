@@ -12,6 +12,8 @@ enum FlowBed: string
 
     case CHANNEL_POST = 'channel_post';
 
+    case CHANNEL_POST_UPDATE = 'channel_post_update';
+
     case CALLBACK_QUERY = 'callback_query';
 
     case INLINE_QUERY = 'inline_query';

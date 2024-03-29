@@ -3,23 +3,14 @@
 namespace App\Models\Bot\Commands;
 
 use App\Botflow\Contracts\CommonBotCommand;
+use App\Models\Bot\Actions\SayHello;
 
 class Start extends CommonBotCommand
 {
 
     public function commonBehavior(): void
     {
-        //
-    }
-
-    public function telegramBehavior(): void
-    {
-        $this->botService->telegraph()->markdown('Привет!')->send();
-    }
-
-    public function consoleBehavior(): void
-    {
-        $this->info('Привет!');
+        $this->botService->addAction(SayHello::class);
     }
 
     public function alias(): string

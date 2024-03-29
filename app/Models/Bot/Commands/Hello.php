@@ -4,6 +4,9 @@ namespace App\Models\Bot\Commands;
 
 use App\Botflow\Contracts\CommonBotCommand;
 use App\Botflow\Flows\SetFunnyReactionToJustReceivedMessage;
+use App\Enums\UserRole;
+use App\Facades\Auth;
+use App\Models\Bot\Actions\SayHello;
 use DefStudio\Telegraph\Enums\ChatActions;
 
 class Hello extends CommonBotCommand
@@ -11,19 +14,7 @@ class Hello extends CommonBotCommand
 
     public function commonBehavior(): void
     {
-        $this->botService->log()->info('Привет!');
-    }
-
-    public function consoleBehavior(): void
-    {
-        $this->info('Привет!');
-    }
-
-    public function telegramBehavior(): void
-    {
-        $this->botService->telegraph()->chatAction(ChatActions::TYPING)->send();
-        $this->botService->chat()->markdown('Привет!')->dispatch()->delay(1);
-        $this->botService->addFlow(SetFunnyReactionToJustReceivedMessage::class);
+        $this->botService->addAction(SayHello::class);
     }
 
     public function alias(): string

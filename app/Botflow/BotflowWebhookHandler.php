@@ -8,8 +8,6 @@ use App\Botflow\Events\TelegramActionTime;
 use App\Botflow\Events\TelegramCommandReceived;
 use App\Botflow\Events\TelegramMessageReceived;
 use App\Botflow\Events\TelegramMiddlewareTime;
-use App\Botflow\Events\TelegramUpdateReceived;
-use App\Botflow\Telegraph\DTO\Update;
 use DefStudio\Telegraph\DTO\CallbackQuery;
 use DefStudio\Telegraph\DTO\Message;
 use DefStudio\Telegraph\Exceptions\TelegramWebhookException;
@@ -51,11 +49,9 @@ class BotflowWebhookHandler extends WebhookHandler
 
         $this->request = $request;
 
-        $update = Update::fromArray($request->all());
-
         $flowBed = $this->processRequest();
 
-        TelegramMiddlewareTime::dispatch($update);
+        TelegramMiddlewareTime::dispatch();
 
         switch ($flowBed) {
             case FlowBed::COMMAND:
@@ -75,6 +71,9 @@ class BotflowWebhookHandler extends WebhookHandler
             case FlowBed::CHANNEL_POST:
                 // @todo: implement channel post flow bed support
                 break;
+            case FlowBed::CHANNEL_POST_UPDATE:
+                // @todo: implement channel post update flow bed support
+                break;
             case FlowBed::CHAT_MEMBERS_JOINED:
                 // @todo: implement chat members joined flow bed support
                 break;
@@ -82,7 +81,7 @@ class BotflowWebhookHandler extends WebhookHandler
                 // @todo: implement chat members left flow bed support
                 break;
         }
-        TelegramUpdateReceived::dispatch($update);
+
         TelegramActionTime::dispatch();
     }
 

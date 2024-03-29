@@ -21,7 +21,7 @@ interface IBotService
 
     public function chat(): TelegraphChat;
 
-    public function flows(): Collection;
+    public function nextFlow(): ?IBotFlow;
 
     public function addFlow(string $flowClass, array $params = []): self;
 
