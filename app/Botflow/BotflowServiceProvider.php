@@ -6,6 +6,8 @@ use App\Botflow\Console\BotCommand;
 use App\Botflow\Console\BotStart;
 use App\Botflow\Console\BotStop;
 use App\Botflow\Contracts\IBotService;
+use App\Botflow\Contracts\IFlowStateRepository;
+use App\Botflow\Eloquent\FlowStateRepository;
 use App\Botflow\Events\TelegramActionTime;
 use App\Botflow\Events\TelegramCommandReceived;
 use App\Botflow\Events\TelegramMessageReceived;
@@ -51,6 +53,8 @@ class BotflowServiceProvider extends EventServiceProvider
             $request = $app->make(Request::class);
             return Update::fromArray($request->all());
         });
+
+        $this->app->bind(IFlowStateRepository::class, fn () => new FlowStateRepository());
 
         $this->app->singleton(IBotService::class, fn () =>
              new BotService(

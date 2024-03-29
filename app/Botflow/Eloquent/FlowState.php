@@ -19,10 +19,10 @@ use Illuminate\Support\Collection;
  * @property string               $class
  * @property FlowStatus           $status
  * @property array                $params
- * @property array                $state
  * @property array                $data
  * @property Collection|Message[] $messages
- * @property int                  $telegram_id
+ * @property int|null             $telegram_user_id
+ * @property int|null             $telegram_chat_id
  */
 class FlowState extends Model
 {
@@ -32,8 +32,18 @@ class FlowState extends Model
     protected $casts = [
         'status'   => FlowStatus::class,
         'params'   => 'array',
-        'state'    => 'array',
         'data'     => 'array',
         'messages' => FlowMessagesCollectionCast::class,
     ];
+
+    protected $fillable = [
+        'class',
+        'status',
+        'params',
+        'data',
+        'telegram_user_id',
+        'telegram_chat_id',
+    ];
+
 }
+

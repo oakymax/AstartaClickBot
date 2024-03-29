@@ -36,9 +36,7 @@ abstract class CommonBotFlowWithState extends CommonBotFlow
         }
 
         if (empty($this->state)) {
-            $this->state         = new FlowState();
-            $this->state->status = FlowStatus::ACTIVE;
-            $this->state->class  = self::class;
+            $this->start();
         } elseif (!is_a($this, $this->state->class)) {
             throw new RuntimeDataInconsistencyErrorException('Requested flow state belongs to other flow class');
         }
@@ -55,7 +53,22 @@ abstract class CommonBotFlowWithState extends CommonBotFlow
      */
     public function start(): void
     {
-        $this->state->status = FlowStatus::ACTIVE;
+        if (empty($this->state)) {
+            $this->state = new FlowState([
+                'status' => FlowStatus::ACTIVE,
+                'class'  => self::class,
+            ]);
+            $this->store();
+        }
+    }
+
+    /**
+     * @return void
+     * @throws RuntimeUnexpectedErrorException
+     */
+    public function finish(): void
+    {
+        $this->state->status = FlowStatus::OK;
         $this->store();
     }
 
@@ -66,16 +79,6 @@ abstract class CommonBotFlowWithState extends CommonBotFlow
     public function interrupt(): void
     {
         $this->state->status = FlowStatus::INTERRUPTED;
-        $this->store();
-    }
-
-    /**
-     * @return void
-     * @throws RuntimeUnexpectedErrorException
-     */
-    public function dispatch(): void
-    {
-        $this->state->status = FlowStatus::QUEUED;
         $this->store();
     }
 
@@ -148,6 +151,10 @@ abstract class CommonBotFlowWithState extends CommonBotFlow
     {
         /** @var FlowState $state */
         $state = FlowState::query()->findOrFail($id);
+
+        if (empty($state)) {
+            throw new RuntimeDataInconsistencyErrorException('Requested flow state does not exist');
+        }
 
         if (!is_subclass_of($state->class, CommonBotFlowWithState::class)) {
             throw new RuntimeDataInconsistencyErrorException('Flow state record contains invalid class');
