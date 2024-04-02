@@ -1,5 +1,3 @@
-# Телеграм-бот MAER Group AIO на Laravel
-
 ## Настройка и запуск
 
 1. copy .env.example -> .env
@@ -278,16 +276,3 @@ alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 
 * требуется реестр сотрудников маер в виде таблицы для импорта в базу
 * какой период по-умолчанию отводится на сбор чеков после уведомления?
-
----
-
-# Материалы по стеку
-
-* Видео на канале
-  AreaWeb: [Телеграм-бот на Laravel](https://www.youtube.com/watch?v=1J8l3pCc8p8)
-* Документация [Laravel Telegraph](https://defstudio.github.io/telegraph/)
-* Документация [Telegram Bot API](https://core.telegram.org/bots/api)
-* Проект на
-  Github: [Телеграм-бот на Laravel](https://github.com/somecode-pro/laravel-telegram-bot)
-* Мануал по телеграм-ботам (на Pyhton
-  3): [Урок 5. Клавиатуры и кнопки](https://surik00.gitbooks.io/aiogram-lessons/content/chapter5.html) 

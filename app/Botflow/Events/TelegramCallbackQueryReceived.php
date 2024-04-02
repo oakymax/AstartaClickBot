@@ -2,22 +2,25 @@
 
 namespace App\Botflow\Events;
 
+use DefStudio\Telegraph\DTO\CallbackQuery;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TelegramMiddlewareTime
+class TelegramCallbackQueryReceived
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct()
+    public function __construct(public CallbackQuery $callbackQuery)
     {
         //
     }
 
-    public function broadcastOn()
+    public function broadcastOn(): array
     {
-        return new PrivateChannel('channel-name');
+        return [
+            new PrivateChannel('channel-name'),
+        ];
     }
 }

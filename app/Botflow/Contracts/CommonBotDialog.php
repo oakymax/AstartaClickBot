@@ -13,6 +13,4 @@ abstract class CommonBotDialog extends CommonBotFlowWithState
      */
     protected abstract function questions(): array;
 
-
-
 }

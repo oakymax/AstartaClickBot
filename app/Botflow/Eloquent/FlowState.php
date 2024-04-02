@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
  *
  * @property string               $class
  * @property FlowStatus           $status
+ * @property boolean              $monopolizing
  * @property array                $params
  * @property array                $data
  * @property Collection|Message[] $messages
@@ -39,6 +40,7 @@ class FlowState extends Model
     protected $fillable = [
         'class',
         'status',
+        'monopolizing',
         'params',
         'data',
         'telegram_user_id',

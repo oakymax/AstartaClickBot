@@ -55,8 +55,9 @@ abstract class CommonBotFlowWithState extends CommonBotFlow
     {
         if (empty($this->state)) {
             $this->state = new FlowState([
-                'status' => FlowStatus::ACTIVE,
-                'class'  => self::class,
+                'status'       => FlowStatus::ACTIVE,
+                'class'        => self::class,
+                'monopolizing' => true,
             ]);
             $this->store();
         }

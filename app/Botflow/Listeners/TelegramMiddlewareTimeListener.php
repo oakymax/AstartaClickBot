@@ -25,14 +25,5 @@ class TelegramMiddlewareTimeListener
         while ($middleware = $this->botService->nextMiddleware()) {
             $middleware->handle($this->update);
         }
-
-        $activeFlowStates = $this->flowStateRepository->getActiveFlowStates(
-            Auth::user()?->telegram_id,
-            $this->botService->chat()?->id
-        );
-
-        foreach ($activeFlowStates as $activeFlowState) {
-            $this->botService->addFlow($activeFlowState->class, ['id' => $activeFlowState->id]);
-        }
     }
 }

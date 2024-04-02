@@ -1,5 +1,6 @@
 <?php
 
+use App\Botflow\Flows\FlowStateManager;
 use App\Models\Bot\Commands\Hello;
 use App\Models\Bot\Commands\Help;
 use App\Models\Bot\Commands\Start;
@@ -27,6 +28,7 @@ return [
     ],
 
     'flows' => [
+        FlowStateManager::class,
         Calculator::class,
         UnprocessedMessageResponse::class,
     ],

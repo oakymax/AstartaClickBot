@@ -32,6 +32,7 @@ class FlowStateRepository implements IFlowStateRepository
                     $query->orWhere('telegram_chat_id', '=', $telegramChatId);
                 }
             })
+            ->orderBy('created_at')
             ->get()->all();
 
         return collect($flows);

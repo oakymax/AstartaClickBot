@@ -16,10 +16,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('class')->nullable(false);
-            $table->string('status')->nullable(false)->default(FlowStatus::ACTIVE->value);
+            $table->string('status')->nullable(false)->default(FlowStatus::QUEUED->value);
+
+            $table->boolean('monopolizing')->nullable(false)->default(false);
 
             $table->jsonb('params')->nullable(false)->default('[]');
             $table->jsonb('data')->nullable(false)->default('[]');
+            $table->jsonb('messages')->nullable(false)->default('[]');
+
             $table->jsonb('messages')->nullable(false)->default('[]');
 
             $table->bigInteger('telegram_user_id')->nullable();
