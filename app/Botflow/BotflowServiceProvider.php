@@ -9,10 +9,12 @@ use App\Botflow\Contracts\IBotService;
 use App\Botflow\Contracts\IFlowStateRepository;
 use App\Botflow\Eloquent\FlowStateRepository;
 use App\Botflow\Events\TelegramActionTime;
+use App\Botflow\Events\TelegramCallbackQueryReceived;
 use App\Botflow\Events\TelegramCommandReceived;
 use App\Botflow\Events\TelegramMessageReceived;
 use App\Botflow\Events\TelegramMiddlewareTime;
 use App\Botflow\Listeners\TelegramActionTimeListener;
+use App\Botflow\Listeners\TelegramCallbackQueryListener;
 use App\Botflow\Listeners\TelegramCommandListener;
 use App\Botflow\Listeners\TelegramMessageListener;
 use App\Botflow\Listeners\TelegramMiddlewareTimeListener;
@@ -42,6 +44,9 @@ class BotflowServiceProvider extends EventServiceProvider
         ],
         TelegramMiddlewareTime::class => [
             TelegramMiddlewareTimeListener::class,
+        ],
+        TelegramCallbackQueryReceived::class => [
+            TelegramCallbackQueryListener::class,
         ],
     ];
 

@@ -5,6 +5,7 @@ namespace App\Botflow;
 use App\Botflow\Contracts\FlowBed;
 use App\Botflow\Contracts\IBotService;
 use App\Botflow\Events\TelegramActionTime;
+use App\Botflow\Events\TelegramCallbackQueryReceived;
 use App\Botflow\Events\TelegramCommandReceived;
 use App\Botflow\Events\TelegramMessageReceived;
 use App\Botflow\Events\TelegramMiddlewareTime;
@@ -40,6 +41,9 @@ class BotflowWebhookHandler extends WebhookHandler
         $this->log = Log::channel('telegraph');
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function handle(Request $request, TelegraphBot $bot): void
     {
         $this->log->info("[BOT <= TG][HOOK] ", $request->all());
@@ -63,6 +67,7 @@ class BotflowWebhookHandler extends WebhookHandler
             case FlowBed::INLINE_QUERY:
                 break;
             case FlowBed::CALLBACK_QUERY:
+                TelegramCallbackQueryReceived::dispatch($this->message);
                 // @todo: implement callback query flow bed support
                 break;
             case FlowBed::MESSAGE_UPDATE:
